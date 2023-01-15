@@ -16,23 +16,22 @@ namespace SympliDevelopment.Api.CacheProvider
 
      private Dictionary<string, CacheEntity> cachedResults = new Dictionary<string, CacheEntity>();
 
-     public SearchResult GetSearchResults(string keyword, int top, string? cursor = null)
+     public SearchResult GetSearchResults(string keyword)
      {
-        if(!cachedResults.TryGetValue(keyword, out CacheEntity? cacheEntity) || this.isCachedEntityExpired(cacheEntity)) {
-            var searchResult = this.searchClient.GetSearchResults();
-
-            // TODO: Check if C# cache throws exception if entry already exists in the cache or just updates the existing entry.
-            cachedResults.Add(keyword, new CacheEntity() { SearchResult = searchResult, CreationTime = DateTime.UtcNow });
-
-            return searchResult;
+        if(cachedResults.TryGetValue(keyword, out CacheEntity? cacheEntity) && this.isCachedEntityValid(cacheEntity)) {
+            return cacheEntity.SearchResult;
         }
 
-        return cacheEntity.SearchResult;
+        // Fetching top 100 results as mentioned.
+        var searchResult = this.searchClient.GetSearchResults(keyword, 100);
+        cachedResults[keyword] = new CacheEntity() { SearchResult = searchResult, CreationTime = DateTime.UtcNow };
+
+        return searchResult;
      }
 
-     private bool isCachedEntityExpired(CacheEntity cacheEntity)
+     private bool isCachedEntityValid(CacheEntity cacheEntity)
      {
-        return cacheEntity.CreationTime < DateTime.UtcNow - this.cacheExpirationTime;
+        return cacheEntity.CreationTime >= (DateTime.UtcNow - this.cacheExpirationTime);
      }
   }
 }

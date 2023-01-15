@@ -12,10 +12,11 @@ namespace SympliDevelopment.Api.Clients
             new List<SearchEntity>
             {
                 new SearchEntity { Index = 2, Title = "Online Settlements", Url = "https://www.sympli.com.au/" },
-                new SearchEntity { Index = 2, Title = "Online Settlements", Url = "https://www.sympli.com.au/" },
-                new SearchEntity { Index = 2, Title = "Online Settlements", Url = "https://www.sympli.com.au/" },
-                new SearchEntity { Index = 5, Title = "Online Settlements Firm", Url = "https://www.es.com.au/" },
-                new SearchEntity { Index = 7, Title = "Online Settlements Company", Url = "https://www.es2.com.au/" }
+                new SearchEntity { Index = 2, Title = "e-settlements", Url = "https://www.sympli.com.au/" },
+                new SearchEntity { Index = 2, Title = "Settlements", Url = "https://www.sympli.com.au/" },
+                new SearchEntity { Index = 2, Title = "Online Settlements", Url = "https://www.es.com.au/" },
+                new SearchEntity { Index = 2, Title = "e-settlements", Url = "https://www.es.com.au/" },
+                new SearchEntity { Index = 2, Title = "Settlements", Url = "https://www.es.com.au/" },
             } 
         }
      };
